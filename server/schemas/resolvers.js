@@ -1,6 +1,5 @@
 const { User, Thought } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
-
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -81,7 +80,7 @@ const resolvers = {
         const updatedThought = await Thought.findOneAndUpdate(
           { _id: thoughtId },
           { $push: { reactions: { reactionBody, username: context.user.username }}},
-          { new: true }
+          { new: true, runValidators: true }
         );
 
         return updatedThought;
